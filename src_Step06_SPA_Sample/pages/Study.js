@@ -1,6 +1,8 @@
 // src/pages/Study.js
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import Eng from "./Eng";
+import MathCom from "./Math";
 
 const { Component } = require("react");
 
@@ -23,6 +25,14 @@ class Study extends Component{
             <>
                 <h3>Study 페이지 입니다</h3>
                 <p>열심히 공부해 보아요</p>
+                <ul>
+                    <li><NavLink to="/study/math">수학공부</NavLink></li>
+                    <li><NavLink to="/study/eng">영어공부</NavLink></li>
+                </ul>
+                <Routes>
+                    <Route path="/math" Component={MathCom}></Route>
+                    <Route path="/eng" Component={Eng}></Route>
+                </Routes>
                 <Link to="/">Home</Link> 
                 <button onClick={()=>{
                     //javascript 로 이동하기
