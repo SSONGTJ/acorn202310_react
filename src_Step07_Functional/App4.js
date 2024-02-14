@@ -34,7 +34,6 @@ function App() {
             {/* item 은 {name:"xxx", seq:x } 형태의 object 이다  */}
             {state.names.map(item => <li key={item.seq}>{item.name}</li>)}
         </ul>
-        {state.json}
         </div>
     );
 }
