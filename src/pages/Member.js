@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Member(){
     //회원 목록 상태값 관리
@@ -35,6 +35,9 @@ export default function Member(){
         })
     }
 
+    //페이지 이동하기 위한 함수
+    const navigate = useNavigate()
+
     return (
         <>
             <Link to="/members/new">회원추가</Link>
@@ -45,6 +48,7 @@ export default function Member(){
                         <th>번호</th>
                         <th>이름</th>
                         <th>주소</th>
+                        <th>수정</th>
                         <th>삭제</th>
                     </tr>
                 </thead>
@@ -55,8 +59,11 @@ export default function Member(){
                     <td>{item.addr}</td>
                     <td>
                         <button onClick={()=>{
-                            handleDelete(item.num)
-                        }}>삭제</button>
+                            navigate(`/members/${item.num}/edit`)
+                        }}>수정</button>
+                    </td>
+                    <td>
+                        <button onClick={()=>handleDelete(item.num)}>삭제</button>
                     </td>
                 </tr>)}
                 </tbody>

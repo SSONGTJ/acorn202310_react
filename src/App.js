@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { decodeToken } from "jsontokens";
 import 'bootstrap/dist/css/bootstrap.css'
+import MemberUpdateForm from "./pages/MemberUpdateForm";
 
 //함수형 component
 function App() {
@@ -46,7 +47,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/members" element={<Member/>}/>
         <Route path="/members/new" element={<MemberForm/>} />
-        <Route path="/members/:num/edit" />
+        <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
       </Routes>
       <LoginModal show={!isLogin}></LoginModal>
     </div>
