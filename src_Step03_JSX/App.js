@@ -4,7 +4,7 @@ import './App.css'
 
 //클래스형 component
 class App extends Component{
-
+  
   //render() 함수에서 리턴하는 jsx 로 화면 구성이 된다.
   render(){
     //jsx 객체를 만들어서 변수에 담기

@@ -61,7 +61,7 @@ function LoginModal(props) {
   //입력한 userName 과 password 를 상태값으로 관리
   const [state, setState]=useState({})
   const [isError, setError]=useState(false)
-
+  
   //input 요소에 문자열을 입력했을때 호출되는 함수 
   const handleChange = (e)=>{
       setState({

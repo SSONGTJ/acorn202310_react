@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { ListGroup, ListGroupItem } from "react-bootstrap"
+import { ListGroup } from "react-bootstrap"
 
 export default function Home(){
 
