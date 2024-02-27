@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { decodeToken } from "jsontokens";
 import 'bootstrap/dist/css/bootstrap.css'
 import MemberUpdateForm from "./pages/MemberUpdateForm";
+import BsNavBar from "./components/BsNavBar";
 
 //함수형 component
 function App() {
@@ -37,20 +38,18 @@ function App() {
   const isLogin = useSelector(state => state.isLogin)
   
   return (
-    <div className="container">
-      <ul>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/members">Member</NavLink></li>
-      </ul>
-
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/members" element={<Member/>}/>
-        <Route path="/members/new" element={<MemberForm/>} />
-        <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
-      </Routes>
-      <LoginModal show={!isLogin}></LoginModal>
-    </div>
+    <>
+      <BsNavBar/>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/members" element={<Member/>}/>
+          <Route path="/members/new" element={<MemberForm/>} />
+          <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
+        </Routes>
+        <LoginModal show={!isLogin}></LoginModal>
+      </div>
+    </>
   );
 }
 
