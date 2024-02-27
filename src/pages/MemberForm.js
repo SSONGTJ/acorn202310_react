@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function MemberForm(){
@@ -35,9 +36,27 @@ export default function MemberForm(){
     return (
         <>
             <h2>새로운 회원 입력 양식</h2>
-            <input type="text" name="name" placeholder="이름..." onChange={handleChange}/>
-            <input type="text" name="addr" placeholder="주소..." onChange={handleChange}/>
-            <button onClick={handleSave}>추가</button>
+            <Form>
+                <Form.Group as={Row} className="mb-3" controlId="name">
+                    <Form.Label column sm="2">이름</Form.Label>
+                    <Col sm="10">
+                        <Form.Control onChange={handleChange} type="text" name="name" placeholder="이름 입력..."/>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="addr">
+                    <Form.Label column sm="2">주소</Form.Label>
+                    <Col sm="10">
+                        <Form.Control onChange={handleChange} type="text" name="addr" placeholder="주소 입력..." />
+                    </Col>
+                </Form.Group>
+                <Row>
+                    <Col sm="2"></Col>
+                    <Col sm="10">
+                        <Button variant="primary" onClick={handleSave}>추가</Button>
+                    </Col>
+                </Row>
+            </Form>
+            
         </>
     )
 }

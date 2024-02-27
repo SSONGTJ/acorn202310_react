@@ -2,6 +2,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { ListGroup, ListGroupItem } from "react-bootstrap"
 
 export default function Home(){
 
@@ -18,9 +19,9 @@ export default function Home(){
         <>
             <h1>인덱스 페이지입니다</h1>
             <h2>공지사항</h2>
-            <ul>
-                {notice.map((item, index)=><li key={index}>{item}</li>)}
-            </ul>
+            <ListGroup as="ol" numbered>
+                {notice.map((item, index)=><ListGroup.Item as="li" key={index}>{item}</ListGroup.Item>)}
+            </ListGroup>
         </>
     )
 }

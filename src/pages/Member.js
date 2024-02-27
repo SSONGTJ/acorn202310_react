@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button, Table } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Member(){
@@ -42,7 +43,7 @@ export default function Member(){
         <>
             <Link to="/members/new">회원추가</Link>
             <h1>회원 목록 입니다</h1>
-            <table>
+            <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -58,16 +59,16 @@ export default function Member(){
                     <td>{item.name}</td>
                     <td>{item.addr}</td>
                     <td>
-                        <button onClick={()=>{
+                        <Button variant="warning" size="sm" onClick={()=>{
                             navigate(`/members/${item.num}/edit`)
-                        }}>수정</button>
+                        }}>수정</Button>
                     </td>
                     <td>
-                        <button onClick={()=>handleDelete(item.num)}>삭제</button>
+                        <Button variant="danger" size="sm" onClick={()=>handleDelete(item.num)}>삭제</Button>
                     </td>
                 </tr>)}
                 </tbody>
-            </table>
+            </Table>
         </>
     )
 }
