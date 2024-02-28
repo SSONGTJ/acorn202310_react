@@ -3,6 +3,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { ListGroup } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 export default function Home(){
 
@@ -18,6 +19,9 @@ export default function Home(){
     return (
         <>
             <h1>인덱스 페이지입니다</h1>
+            <ul>
+                <li><Link to="/editor">SmartEditor 테스트</Link></li>
+            </ul>
             <h2>공지사항</h2>
             <ListGroup as="ol" numbered>
                 {notice.map((item, index)=><ListGroup.Item as="li" key={index}>{item}</ListGroup.Item>)}
