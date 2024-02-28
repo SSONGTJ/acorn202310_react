@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import MemberUpdateForm from "./pages/MemberUpdateForm";
 import BsNavBar from "./components/BsNavBar";
 import EditorComponent from "./pages/EditorComponent";
+import Gallery from "./pages/Gallery";
 
 //함수형 component
 function App() {
@@ -48,6 +49,7 @@ function App() {
           <Route path="/members/new" element={<MemberForm/>} />
           <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
           <Route path="/editor" Component={EditorComponent}/>
+          <Route path="/gallery" Component={Gallery}/>
         </Routes>
         <LoginModal show={!isLogin}></LoginModal>
       </div>
