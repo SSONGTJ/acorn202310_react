@@ -7,7 +7,7 @@ export default function EditorComponent(){
     //입력한 내용을 얻어오기 위한 useRef()
     const inputTitle=useRef();
     const inputContent=useRef();
-
+    //SmartEditor 에 작성한 내용을 textarea 의 value 로 넣어 줄때 필요한 함수가 editorTool 이다 
     const [editorTool, setEditorTool] = useState([])
 
     useEffect(()=>{

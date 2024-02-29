@@ -1,13 +1,43 @@
 // src/pages/Gallery.js
 
 import axios from "axios";
-import { useState } from "react";
-import { Button, Card, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Card, Col, FloatingLabel, Form, Modal, Pagination, Row } from "react-bootstrap";
 
 export default function Gallery(){
     //이미지 업로드 form 을 띄울지 여부를 상태값으로 관리 
     const [formShow, setFormShow]=useState(false);
     
+    const [galleryList, setGalleryList]=useState([])
+
+    //페이징 UI 를 만들때 사용할 배열을 리턴해주는 함수 
+    function createArray(start, end) {
+      const result = [];
+      for (let i = start; i <= end; i++) {
+          result.push(i);
+      }
+      return result;
+    }
+
+    const nums=createArray(1, 10)
+    
+    //겔러리 목록 데이터 읽어오는 함수
+    const refresh = (pageNum)=>{
+      axios.get("/gallery?pageNum="+pageNum)
+      .then(res=>{
+        console.log(res.data)
+        setGalleryList(res.data)
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    }
+
+    useEffect(()=>{
+      //컴포넌트가 활성화 되는 시점에는 1페이지의 내용 보여주기 
+      refresh(1)
+    }, [])
+
     return (
         <>
             <h3>겔러리 입니다</h3>
@@ -16,8 +46,30 @@ export default function Gallery(){
                 setFormShow(true)
             }}>업로드</button>
             <Row>
-
+            {
+              galleryList.map(item=>(
+                <Col sm={6} md={3} key={item.num}>
+                  <Card>
+                    <Card.Img variant="top" src={`/upload/images/${item.saveFileName}`}/>
+                    <Card.Body>
+                      <Card.Text>{item.caption}</Card.Text>
+                      <Card.Text>writer : <strong>{item.writer}</strong></Card.Text>
+                      <Button>자세히 보기</Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))
+            }
             </Row>
+            <Pagination>
+              <Pagination.Item>&laquo;</Pagination.Item> 
+              {
+                nums.map(item=>(<Pagination.Item onClick={()=>{
+                  refresh(item)
+                }}>{item}</Pagination.Item>))
+              }
+              <Pagination.Item>&raquo;</Pagination.Item> 
+            </Pagination>  
             <UploadFormModal show={formShow} setShow={setFormShow}/>
         </>
     )
@@ -58,7 +110,11 @@ function UploadFormModal(props) {
         })
         .then(res=>{
             console.log(res.data);  
-            props.onClose();
+            //폼 숨기기
+            props.setShow(false);
+            //입력하거나 선택된 상태값 초기화 
+            setPreviewImage(null)
+            setCaption(null)
         })
         .catch(error=>{
             console.log(error);

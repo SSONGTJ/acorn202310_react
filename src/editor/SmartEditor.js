@@ -1,5 +1,24 @@
 // src/editor/SmartEditor.js
 
+/*
+    153 번째 라인에  
+
+    "/static/SmartEditor/SmartEditor2Skin.html"
+
+    를 상황에 맞게 변경해서 써야한다 
+
+    예를들어 spring boot 서버의 context 경로가  /boot11 이면
+
+    "/boot11/static/SmartEditor/SmartEditor2Skin.html"  가 된다 
+
+    여기서 /static 은  public 폴더 안에 있는 static 폴더를 가리킨다 
+
+    폴더명을  gura 라고 한다면  
+
+    "/boot11/gura//SmartEditor/SmartEditor2Skin.html"  가 된다 
+
+*/
+
 function initEditor(id="content"){ // id 는 textarea 의 아이디 
    
     if(typeof window.nhn=='undefined'){

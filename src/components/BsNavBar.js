@@ -22,11 +22,10 @@ export default function BsNavBar(){
     return (
         <Navbar expand="md" className="bg-warning mb-2">
             <Container>
-                <Navbar.Brand href="#home">Acorn</Navbar.Brand>
+                <Navbar.Brand as={NavLink} to="/">Acorn</Navbar.Brand>
                 <Navbar.Toggle aria-controls="one"/>
                 <Navbar.Collapse id="one">
                     <Nav className="me-auto">
-                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
                         <Nav.Link as={NavLink} to="/members">Member</Nav.Link>
                         <Nav.Link as={NavLink} to="/gallery">Gallery</Nav.Link>
                     </Nav>
