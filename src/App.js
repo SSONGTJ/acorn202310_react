@@ -12,6 +12,7 @@ import MemberUpdateForm from "./pages/MemberUpdateForm";
 import BsNavBar from "./components/BsNavBar";
 import EditorComponent from "./pages/EditorComponent";
 import Gallery from "./pages/Gallery";
+import Book from "./pages/Book";
 
 //함수형 component
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
           <Route path="/editor" Component={EditorComponent}/>
           <Route path="/gallery" Component={Gallery}/>
+          <Route path="/book" Component={Book}/>
         </Routes>
         <LoginModal show={!isLogin}></LoginModal>
       </div>
