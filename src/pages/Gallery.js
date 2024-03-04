@@ -8,7 +8,13 @@ export default function Gallery(){
     //이미지 업로드 form 을 띄울지 여부를 상태값으로 관리 
     const [formShow, setFormShow]=useState(false);
     
-    const [galleryList, setGalleryList]=useState([])
+    //const [galleryList, setGalleryList]=useState([])
+    const [pageInfo, setPageInfo]=useState({
+      list:[]
+    })
+
+    //페이징 UI 를 만들때 사용할 배열
+    const [pageArray, setPageArray]=useState([])
 
     //페이징 UI 를 만들때 사용할 배열을 리턴해주는 함수 
     function createArray(start, end) {
@@ -19,14 +25,16 @@ export default function Gallery(){
       return result;
     }
 
-    const nums=createArray(1, 10)
-    
     //겔러리 목록 데이터 읽어오는 함수
     const refresh = (pageNum)=>{
       axios.get("/gallery?pageNum="+pageNum)
       .then(res=>{
         console.log(res.data)
-        setGalleryList(res.data)
+        //갤러리 목록 출력
+        setPageInfo(res.data)
+        //페이징 UI 출력
+        const result=createArray(res.data.startPageNum, res.data.endPageNum)
+        setPageArray(result)
       })
       .catch(error=>{
         console.log(error)
@@ -47,7 +55,7 @@ export default function Gallery(){
             }}>업로드</button>
             <Row>
             {
-              galleryList.map(item=>(
+              pageInfo.list.map(item=>(
                 <Col sm={6} md={3} key={item.num}>
                   <Card>
                     <Card.Img variant="top" src={`/upload/images/${item.saveFileName}`}/>
@@ -61,14 +69,18 @@ export default function Gallery(){
               ))
             }
             </Row>
-            <Pagination>
-              <Pagination.Item>&laquo;</Pagination.Item> 
+            <Pagination className="mt-3">
+              <Pagination.Item onClick={()=>{
+                refresh(pageInfo.startPageNum-1)
+              }} disabled={pageInfo.startPageNum === 1}>&laquo;</Pagination.Item> 
               {
-                nums.map(item=>(<Pagination.Item onClick={()=>{
+                pageArray.map(item=>(<Pagination.Item onClick={()=>{
                   refresh(item)
-                }}>{item}</Pagination.Item>))
+                }}  key={item} active={pageInfo.pageNum === item}>{item}</Pagination.Item>))
               }
-              <Pagination.Item>&raquo;</Pagination.Item> 
+              <Pagination.Item onClick={()=>{
+                refresh(pageInfo.endPageNum+1)
+              }} disabled={pageInfo.endPageNum >= pageInfo.totalPageCount }>&raquo;</Pagination.Item> 
             </Pagination>  
             <UploadFormModal show={formShow} setShow={setFormShow}/>
         </>
