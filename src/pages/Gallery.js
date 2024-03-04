@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Col, FloatingLabel, Form, Modal, Pagination, Row } from "react-bootstrap";
+import { useSearchParams } from "react-router-dom";
 
 export default function Gallery(){
     //이미지 업로드 form 을 띄울지 여부를 상태값으로 관리 
@@ -15,6 +16,8 @@ export default function Gallery(){
 
     //페이징 UI 를 만들때 사용할 배열
     const [pageArray, setPageArray]=useState([])
+    // "/gallery?pageNum=x" 에서 pageNum 을 추출하기 위한 Hook   
+    const [params, setParams]=useSearchParams({pageNum:1})
 
     //페이징 UI 를 만들때 사용할 배열을 리턴해주는 함수 
     function createArray(start, end) {
@@ -42,9 +45,13 @@ export default function Gallery(){
     }
 
     useEffect(()=>{
-      //컴포넌트가 활성화 되는 시점에는 1페이지의 내용 보여주기 
-      refresh(1)
-    }, [])
+      //query 파라미터 값을 읽어와 본다
+      let pageNum=params.get("pageNum")
+      //만일 존재 하지 않는다면 1 페이지로 설정
+      if(pageNum==null)pageNum=1
+      //해당 페이지의 내용을 원격지 서버로 부터 받아온다 
+      refresh(pageNum)
+    }, [params]) // params 가 변경되었을때도 다시 받아오도록 한다 
 
     return (
         <>
@@ -71,15 +78,16 @@ export default function Gallery(){
             </Row>
             <Pagination className="mt-3">
               <Pagination.Item onClick={()=>{
-                refresh(pageInfo.startPageNum-1)
+                //setParmas() 함수를 이용해서 query 파라미터를 변경한다(history 에 누적이 됨)
+                setParams({pageNum:pageInfo.startPageNum-1})
               }} disabled={pageInfo.startPageNum === 1}>&laquo;</Pagination.Item> 
               {
                 pageArray.map(item=>(<Pagination.Item onClick={()=>{
-                  refresh(item)
+                  setParams({pageNum:item})
                 }}  key={item} active={pageInfo.pageNum === item}>{item}</Pagination.Item>))
               }
               <Pagination.Item onClick={()=>{
-                refresh(pageInfo.endPageNum+1)
+                setParams({pageNum:pageInfo.endPageNum+1})
               }} disabled={pageInfo.endPageNum >= pageInfo.totalPageCount }>&raquo;</Pagination.Item> 
             </Pagination>  
             <UploadFormModal show={formShow} setShow={setFormShow}/>
