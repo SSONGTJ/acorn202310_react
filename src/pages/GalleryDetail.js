@@ -32,7 +32,7 @@ export default function GalleryDetail(){
                 <>
                     <Pagination>
                         <Pagination.Item disabled={state.prevNum === 0} as={Link} to={"/gallery/"+state.prevNum}>&larr; Prev</Pagination.Item>
-                        <Pagination.Item disabled={state.nextNum ===} as={Link} to={"/gallery/"+state.nextNum}>Next &rarr;</Pagination.Item>
+                        <Pagination.Item disabled={state.nextNum === 0} as={Link} to={"/gallery/"+state.nextNum}>Next &rarr;</Pagination.Item>
                     </Pagination>
                     <Card>
                         <Card.Img variant="top" src={`/upload/images/${state.saveFileName}`}/>
