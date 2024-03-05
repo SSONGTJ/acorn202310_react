@@ -16,27 +16,8 @@ import Book from "./pages/Book";
 
 //함수형 component
 function App() {
-  const dispatch = useDispatch()
-  //페이지 로딩시점에 token 확인!
-  useEffect(()=>{
-      if(localStorage.token){
-          //토큰을 디코딩
-          const result=decodeToken(localStorage.token);
-          //초단위
-          const expTime=result.payload.exp*1000; // *1000 을 해서 ms 단위로 만들고 
-          //현재시간
-          const now=new Date().getTime();
-          //만일 유효기간이 만료 되었다면 
-          if(expTime < now){
-              dispatch({type:"SET_LOGIN", payload:false})
-          }else{//유효기간이 만료 되지 않았다면 로그인된 상태라고 간주!
-              dispatch({type:"SET_LOGIN", payload:true})
-              dispatch({type:"UPDATE_USER", payload:result.payload.sub})
-              //axios 의 header 에 인증정보를 기본으로 가지고 갈수 있도록 설정 
-              axios.defaults.headers.common["Authorization"]="Bearer+"+localStorage.token
-          }
-      }
-  }, [])
+  
+  
   //로그이 여부(유효한 토큰이 존재하는지 여부) 알아내기 
   const isLogin = useSelector(state => state.isLogin)
   
