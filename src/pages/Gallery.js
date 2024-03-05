@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Col, FloatingLabel, Form, Modal, Pagination, Row } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Gallery(){
     //이미지 업로드 form 을 띄울지 여부를 상태값으로 관리 
@@ -18,6 +18,8 @@ export default function Gallery(){
     const [pageArray, setPageArray]=useState([])
     // "/gallery?pageNum=x" 에서 pageNum 을 추출하기 위한 Hook   
     const [params, setParams]=useSearchParams({pageNum:1})
+    //페이지를 이동할 Hook
+    const navigate=useNavigate()
 
     //페이징 UI 를 만들때 사용할 배열을 리턴해주는 함수 
     function createArray(start, end) {
@@ -69,7 +71,8 @@ export default function Gallery(){
                     <Card.Body>
                       <Card.Text>{item.caption}</Card.Text>
                       <Card.Text>writer : <strong>{item.writer}</strong></Card.Text>
-                      <Button>자세히 보기</Button>
+                      <Button onClick={()=>{ navigate("/gallery/"+item.num) }}>자세히 보기</Button>
+                      <Button as={Link} to={"/gallery/"+item.num}>자세히 보기</Button>
                     </Card.Body>
                   </Card>
                 </Col>

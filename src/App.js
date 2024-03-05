@@ -13,10 +13,11 @@ import BsNavBar from "./components/BsNavBar";
 import EditorComponent from "./pages/EditorComponent";
 import Gallery from "./pages/Gallery";
 import Book from "./pages/Book";
+import GalleryDetail from "./pages/GalleryDetail";
 
 //함수형 component
 function App() {
-  
+
   
   //로그이 여부(유효한 토큰이 존재하는지 여부) 알아내기 
   const isLogin = useSelector(state => state.isLogin)
@@ -32,6 +33,7 @@ function App() {
           <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
           <Route path="/editor" Component={EditorComponent}/>
           <Route path="/gallery" Component={Gallery}/>
+          <Route path="/gallery/:num" Component={GalleryDetail}/>
           <Route path="/book" Component={Book}/>
         </Routes>
         <LoginModal show={!isLogin}></LoginModal>
