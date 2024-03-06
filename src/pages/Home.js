@@ -29,6 +29,7 @@ export default function Home(){
             <ul>
                 <li><Link to="/editor">SmartEditor 테스트</Link></li>
                 <li><Link to="/book">Query Param 테스트</Link></li>
+                <li><Link to="/transition">React Transition Group 테스트</Link></li>
             </ul>
             <h2>공지사항</h2>
             <ListGroup as="ol" numbered>
