@@ -8,7 +8,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import ConfirmModal from "../components/ConfirmModal"
 
 export default function GalleryDetail(){
-    // "/gallery/:num" 에서 num 에 해당하는 경로 파라키터 값 읽어오기
+    // "/gallery/:num" 에서 num 에 해당하는 경로 파라미터 값 읽어오기
     const {num}=useParams()
     //gallery 하나의 정보를 상태값으로 관리 
     const [state, setState]=useState(null)
@@ -32,8 +32,10 @@ export default function GalleryDetail(){
     
     //삭제 확인 버튼을 눌렀을때 호출되는 함수 
     const handleYes = ()=>{
+        //state.num 에 해당되는 gallery 정보를 삭제하고 
         axios.delete("/gallery/"+state.num)
         .then(res=>{
+            //gallery 목록 보기로 이동 
             navigate("/gallery")
         })
         .catch(error=>{
@@ -56,6 +58,7 @@ export default function GalleryDetail(){
                             <Card.Text>{state.caption}</Card.Text>
                             <Card.Text>writer : <strong>{state.writer}</strong></Card.Text>
                             <Card.Text>{state.regdate}</Card.Text>
+                            {/* 로그인된 사용자와 글 작성자가 같으면 삭제 버튼을 제공한다 */}
                             { userName === state.writer && <Button variant="danger" onClick={()=>{
                                 setModalShow(true)
                             }}>삭제</Button> }

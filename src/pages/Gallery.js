@@ -93,7 +93,18 @@ export default function Gallery(){
                 setParams({pageNum:pageInfo.endPageNum+1})
               }} disabled={pageInfo.endPageNum >= pageInfo.totalPageCount }>&raquo;</Pagination.Item> 
             </Pagination>  
-            <UploadFormModal show={formShow} setShow={setFormShow}/>
+            <UploadFormModal show={formShow} setShow={setFormShow} success={()=>{
+              //현재 페이지번호
+              const pageNum=params.get("pageNum")
+              //만일 현재 페이지가 1페이지 이면 
+              if(pageNum == 1){
+                //1페이지가 refresh 되도록 하고 
+                refresh(1)
+              }else{
+                //다른 경우에는 query parameter 를 변경하면서 refresh 되도록 한다.
+                setParams({pageNum:1})
+              }
+            }}/>
         </>
     )
 }
@@ -138,6 +149,8 @@ function UploadFormModal(props) {
             //입력하거나 선택된 상태값 초기화 
             setPreviewImage(null)
             setCaption(null)
+            //업로드 성공이라는 의미에서 props.success() 함수를 호출한다 
+            props.success()
         })
         .catch(error=>{
             console.log(error);
