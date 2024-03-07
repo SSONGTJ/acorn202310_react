@@ -5,13 +5,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //라우터를 사용할 준비
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
 // legacy_createStore 를 createStore 라는 이름으로 사용하기 (store 를 만들 함수)
 import { legacy_createStore as createStore } from 'redux';
 // store(저장소) 공급자 
 import { Provider } from 'react-redux';
 import { decodeToken } from 'jsontokens';
 import axios from 'axios';
+import Home from './pages/Home';
+import Member from './pages/Member';
+import Gallery from './pages/Gallery';
+import MemberForm from './pages/MemberForm';
+import MemberUpdateForm from './pages/MemberUpdateForm';
+import GalleryDetail from './pages/GalleryDetail';
+import EditorComponent from './pages/EditorComponent';
+import Book from './pages/Book';
+import Transition from './pages/Transition';
+import Transition2 from './pages/Transition2';
 
 // token 이 존재 한다면 token 에서 값을 읽어와서 저장할 변수 만들기
 let userName=null
@@ -63,13 +73,39 @@ const reducer = (state=initialState, action)=>{
 //reducer 함수를 인자로 전달하면서 store(저장소) 를 만들어준다 
 const store = createStore(reducer)
 
+//라우트 정보를 배열에 저장하기
+const routes=[
+  {path:"/", element:<Home/>},
+  {path:"/members", element:<Member/>},
+  {path:"/members/new", element:<MemberForm/>},
+  {path:"/members/:num/edit", element:<MemberUpdateForm/>},
+  {path:"/gallery", element:<Gallery/>},
+  {path:"/gallery/:num", element:<GalleryDetail/>},
+  {path:"/editor", element:<EditorComponent/>},
+  {path:"/book", element:<Book/>},
+  {path:"/transition", element:<Transition/>},
+  {path:"/transition2", element:<Transition2/>}
+]
+//BrowserRouter 를 custom 으로 만들기
+const router = createBrowserRouter([{
+  path:"/",  //현재 경로가 최상위 경로 일때
+  element:<App/>, //App Component 를 사용하겠다 
+  children: routes.map((route)=>{  //자식 컴포넌트 정보 등록 
+    return {
+      index: route.path === "/", //자식의 path 가 "/" 면 index 페이지 역활을 하게 하기 
+      path: route.path === "/" ? undefined : route.path, // path 에 "/" 두개가 표시 되지 안토록  
+      element: route.element //어떤 컴포넌트를 활성화 할것인지 
+    }
+  })
+}])
+
+
+
 //id 가 root 인 곳에 UI 출력하기 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RouterProvider router={router}/>
   </Provider>
 );
 

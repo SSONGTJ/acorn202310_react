@@ -1,45 +1,50 @@
-import { NavLink, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Member from "./pages/Member";
-import MemberForm from "./pages/MemberForm";
+import {  useLocation, useOutlet } from "react-router-dom";
 import { Alert, Button, FloatingLabel, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { decodeToken } from "jsontokens";
 import 'bootstrap/dist/css/bootstrap.css'
-import MemberUpdateForm from "./pages/MemberUpdateForm";
 import BsNavBar from "./components/BsNavBar";
-import EditorComponent from "./pages/EditorComponent";
-import Gallery from "./pages/Gallery";
-import Book from "./pages/Book";
-import GalleryDetail from "./pages/GalleryDetail";
-import Transition from "./pages/Transition";
-import Transition2 from "./pages/Transition2";
+import 'animate.css'
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 //함수형 component
 function App() {
 
-  
   //로그이 여부(유효한 토큰이 존재하는지 여부) 알아내기 
   const isLogin = useSelector(state => state.isLogin)
-  
+  //라우트된 정보를 출력해주는 Hook 
+  const currentOutlet=useOutlet()
+  //현재 위치(경로) 정보를 얻어낼수 있는 Hook
+  const location=useLocation()
+  //참조값 관리를 위한 Hook
+  const nodeRef=useRef()
+  //transition 클래스 정보
+  const tranClass={
+    enter:"animate__animated",
+    enterActive:"animate__fadeIn",
+    exit:"animate__animated",
+    exitActive:"animate__fadeOut"
+  }
+
   return (
     <>
       <BsNavBar/>
       <div className="container">
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/members" element={<Member/>}/>
-          <Route path="/members/new" element={<MemberForm/>} />
-          <Route path="/members/:num/edit" Component={MemberUpdateForm}/>
-          <Route path="/editor" Component={EditorComponent}/>
-          <Route path="/gallery" Component={Gallery}/>
-          <Route path="/gallery/:num" Component={GalleryDetail}/>
-          <Route path="/book" Component={Book}/>
-          <Route path="/transition" Component={Transition}/>
-          <Route path="/transition2" Component={Transition2}/>
-        </Routes>
+
+        <SwitchTransition>
+          <CSSTransition 
+            key={location.pathname}
+            nodeRef={nodeRef}
+            timeout={300}
+            classNames={tranClass}
+            unmountOnExit
+          >
+           <div ref={nodeRef}>{currentOutlet}</div>
+          </CSSTransition>
+        </SwitchTransition>
+
         <LoginModal show={!isLogin}></LoginModal>
       </div>
     </>
