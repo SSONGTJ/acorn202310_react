@@ -15,6 +15,7 @@ import Gallery from "./pages/Gallery";
 import Book from "./pages/Book";
 import GalleryDetail from "./pages/GalleryDetail";
 import Transition from "./pages/Transition";
+import Transition2 from "./pages/Transition2";
 
 //함수형 component
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/gallery/:num" Component={GalleryDetail}/>
           <Route path="/book" Component={Book}/>
           <Route path="/transition" Component={Transition}/>
+          <Route path="/transition2" Component={Transition2}/>
         </Routes>
         <LoginModal show={!isLogin}></LoginModal>
       </div>

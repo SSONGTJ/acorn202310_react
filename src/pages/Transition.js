@@ -6,7 +6,7 @@ import { Alert, Button } from "react-bootstrap";
 import { CSSTransition } from "react-transition-group";
 //css 를 import 해서 적용되도록 한다 
 import './css/transition1.css'
-import { node } from "prop-types";
+
 
 export default function Transition(){
     // inProp 라는 상태값을 하나 관리한다. 초기값은 false
@@ -15,14 +15,30 @@ export default function Transition(){
     const nodeRef = useRef(null)
     //알림 메세지를 보이게 할지 여부
     const [showMessage, setShowMessage]=useState(false)
-
+    // box 를 보이게 할지 여부 
+    const [boxShow, setBoxShow]=useState(false)
+    //transition 클래스 정의하기
+    const tranClass={
+        enter:"on-start",  //enter 될때 추가할 클래스의 이름
+        enterActive:"on-end", //enter-active 될때 추가할 클래스의 이름 
+        enterDone:"on-done", //enter 가 끝났을때 추가할 클래스의 이름
+        exit:"off-start",
+        exitActive:"off-end",
+        exitDone:"off-done"
+    }
     return (
         <>
             <h3>React Transition Group</h3>
             <p>
                 페키지 설치 <code>npm install react-transition-group</code>
             </p>
-            <CSSTransition  nodeRef={nodeRef} in={inProp} timeout={400} classNames="gura">
+            <CSSTransition  
+                nodeRef={nodeRef} 
+                in={inProp} 
+                timeout={400} 
+                classNames="gura"
+                unmountOnExit
+            >
                 <div ref={nodeRef}>
                     Css Transition!!
                 </div>
@@ -56,6 +72,21 @@ export default function Transition(){
                     <Button onClick={()=>setShowMessage(false)}>확인</Button>
                 </Alert>
             </CSSTransition>
+            <br/>
+            <Button variant="info" onClick={()=>{
+                //boxShow 값을 toggle 시킨다 
+                setBoxShow(!boxShow)
+            }}>토글</Button>
+            <CSSTransition 
+                in={boxShow} 
+                unmountOnExit
+                timeout={400}
+                classNames={tranClass}
+            >
+                <div className="box">box</div>
+            </CSSTransition>
+
+            <div style={{height:"300px"}}></div>
         </>
     )
 }
