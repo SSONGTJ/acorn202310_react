@@ -1,0 +1,21 @@
+/*
+    src/pages/css/transition4.css
+*/
+
+.fade2-enter{
+    opacity: 0;
+}
+
+.fade2-enter-active{
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.fade2-exit{
+    opacity: 1;
+}
+
+.fade2-exit-active{
+    opacity: 0;
+    transition: opacity 0.5s;
+}

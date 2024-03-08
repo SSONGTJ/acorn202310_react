@@ -32,8 +32,8 @@ function App() {
     <>
       <BsNavBar/>
       <div className="container">
-
-        <SwitchTransition>
+        {/*  "out-in" 사라지고 들어오기 | "in-out" 들어오고 사라지기 */}
+        <SwitchTransition mode="out-in">
           <CSSTransition 
             key={location.pathname}
             nodeRef={nodeRef}

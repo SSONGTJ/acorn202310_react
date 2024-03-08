@@ -12,6 +12,8 @@ import MemberUpdateForm from "../pages/MemberUpdateForm"
 import Transition from "../pages/Transition"
 import Transition2 from "../pages/Transition2"
 import App from "../App"
+import Transition3 from "../pages/Transition3"
+import Transition4 from "../pages/Transition4"
 
 //라우트 정보를 배열에 저장하기
 const routes=[
@@ -24,7 +26,9 @@ const routes=[
     {path:"/editor", element:<EditorComponent/>},
     {path:"/book", element:<Book/>},
     {path:"/transition", element:<Transition/>},
-    {path:"/transition2", element:<Transition2/>}
+    {path:"/transition2", element:<Transition2/>},
+    {path:"/transition3", element:<Transition3/>},
+    {path:"/transition4", element:<Transition4/>}
   ]
 //BrowserRouter 를 custom 으로 만들기
 const router = createBrowserRouter([{
