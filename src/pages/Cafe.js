@@ -73,7 +73,9 @@ export default function Cafe(){
                         pageInfo.list.map(item=>(
                             <tr>
                                 <td>{item.num}</td>
-                                <td>{item.title}</td>
+                                <td>
+                                    <Link to={`/cafes/${item.num}`}>{item.title}</Link>
+                                </td>
                                 <td>{item.writer}</td>
                                 <td>{item.viewCount}</td>
                                 <td>{item.regdate}</td>
