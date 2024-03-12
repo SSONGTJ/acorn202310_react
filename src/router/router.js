@@ -14,6 +14,8 @@ import Transition2 from "../pages/Transition2"
 import App from "../App"
 import Transition3 from "../pages/Transition3"
 import Transition4 from "../pages/Transition4"
+import Cafe from "../pages/Cafe"
+import CafeForm from "../pages/CafeForm"
 
 //라우트 정보를 배열에 저장하기
 const routes=[
@@ -28,7 +30,9 @@ const routes=[
     {path:"/transition", element:<Transition/>},
     {path:"/transition2", element:<Transition2/>},
     {path:"/transition3", element:<Transition3/>},
-    {path:"/transition4", element:<Transition4/>}
+    {path:"/transition4", element:<Transition4/>},
+    {path:"/cafes", element:<Cafe/>},
+    {path:"/cafes/new", element:<CafeForm/>}
   ]
 //BrowserRouter 를 custom 으로 만들기
 const router = createBrowserRouter([{
