@@ -106,7 +106,7 @@ export default function Cafe(){
                             <tr key={item.num}>
                                 <td>{item.num}</td>
                                 <td>
-                                    <Link to={`/cafes/${item.num}`}>{item.title}</Link>
+                                    <Link to={`/cafes/${item.num}?condition=${searchState.condition}&keyword=${searchState.keyword}`}>{item.title}</Link>
                                 </td>
                                 <td>{item.writer}</td>
                                 <td>{item.viewCount}</td>

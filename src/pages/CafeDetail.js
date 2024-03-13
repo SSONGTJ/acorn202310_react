@@ -3,14 +3,20 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Button } from "react-bootstrap"
 import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 export default function CafeDetail(){
     // "/cafes/:num" 에서 num 에 해당하는 경로 파라미터 값 읽어오기
     const {num}=useParams()
     //cafe 하나의 정보를 상태값으로 관리 
     const [state, setState]=useState({})
+    //검색 키워드 관련 처리 
+    const [params, setParams]=useSearchParams({}) 
+
+    console.log(new URLSearchParams(params).toString())
+
     //삭제 모달을 띄울지 여부를 상태값으로 관리
     const [modalShow, setModalShow]=useState(false)
 
@@ -19,7 +25,9 @@ export default function CafeDetail(){
     const navigate=useNavigate()
 
     useEffect(()=>{
-        axios.get("/cafes/"+num)
+        //서버에 요청을 할때 검색 키워드 관련 정보도 같이 보낸다.
+        const query=new URLSearchParams(params).toString()
+        axios.get("/cafes/"+num+"?"+query)
         .then(res=>{
             console.log(res.data)
             setState(res.data)
@@ -37,6 +45,23 @@ export default function CafeDetail(){
 
     return (
         <>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><Link to="/">Home</Link></li>
+                    <li class="breadcrumb-item"><Link to="/cafes">Cafe</Link></li>
+                    <li class="breadcrumb-item active">Detail</li>
+                </ol>
+		    </nav>
+		
+            { state.prevNum !== 0 ? <Link to={"/cafes/"+state.prevNum+"?"+new URLSearchParams(params).toString()}>이전글</Link> : ""}
+            { state.nextNum !== 0 ? <Link to={"/cafes/"+state.nextNum+"?"+new URLSearchParams(params).toString()}>다음글</Link> : ""}
+            
+            { params.get("condition") &&
+                <p>
+                    <strong>{params.get("condition")}</strong> 조건
+                    <strong>{params.get("keyword")}</strong> 검색어로 검색된 내용 
+                </p>
+            }
             <h1>글 자세히 보기 페이지</h1>
             <table>
                 <tr>
