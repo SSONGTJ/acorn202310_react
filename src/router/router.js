@@ -18,6 +18,7 @@ import Cafe from "../pages/Cafe"
 import CafeForm from "../pages/CafeForm"
 import CafeDetail from "../pages/CafeDetail"
 import RefTest from "../pages/RefTest"
+import ModuleCss from "../pages/ModuleCss"
 
 //라우트 정보를 배열에 저장하기
 const routes=[
@@ -36,7 +37,8 @@ const routes=[
     {path:"/cafes", element:<Cafe/>},
     {path:"/cafes/new", element:<CafeForm/>},
     {path:"/cafes/:num", element:<CafeDetail/>},
-    {path:"/ref_test", element:<RefTest/>}
+    {path:"/ref_test", element:<RefTest/>},
+    {path:"/module_css", element:<ModuleCss/>}
   ]
 //BrowserRouter 를 custom 으로 만들기
 const router = createBrowserRouter([{
