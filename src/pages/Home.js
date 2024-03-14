@@ -31,6 +31,7 @@ export default function Home(){
                 <li><Link to="/book">Query Param 테스트</Link></li>
                 <li><Link to="/transition">React Transition Group 테스트</Link></li>
                 <li><Link to="/transition2">React Transition Group 테스트2</Link></li>
+                <li><Link to="/ref_test">Ref 테스트</Link></li>
             </ul>
             <h2>공지사항</h2>
             <ListGroup as="ol" numbered>
