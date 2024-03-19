@@ -13,6 +13,8 @@ import binder from 'classnames/bind'
 //cx 함수 
 const cx=binder.bind(myCss)
 
+//새로운 댓글이 들어가야 되는 인덱스
+let commentIndex=0
 
 export default function CafeDetail(){
     // "/cafes/:num" 에서 num 에 해당하는 경로 파라미터 값 읽어오기
@@ -29,7 +31,7 @@ export default function CafeDetail(){
     const [totalPageCount, setTotalPageCount] = useState(0)
     //현재 로딩중인지 여부 
     const [isLoading, setLoading] = useState(false)
-
+  
     //console.log(new URLSearchParams(params).toString())
 
     //삭제 모달을 띄울지 여부를 상태값으로 관리
@@ -73,14 +75,15 @@ export default function CafeDetail(){
 
         axios.post(action, formData)
         .then(res=>{
-            //새로운 댓글 목록이 응답된다.
+            //새로 추가된 댓글 하나가 응답된다.
             console.log(res.data)
-            const list=res.data.commentList.map(item=>{
-                item.ref=createRef()
-                return item
-            })
-            setCommentList(list)
-            setTotalPageCount(res.data.totalPageCount)
+            //새로운 댓글을 commentList 배열의 원하는 인덱스에 끼워 넣는다.
+            const newComment = res.data
+            newComment.ref=createRef()
+            commentList.splice(commentIndex, 0, newComment)
+            
+            //끼워 놓은 배열의 아이템으로 구성된 배열로 상태값을 변경한다 
+            setCommentList([...commentList])
         })
         .catch(error=>{
             console.log(error)
@@ -123,7 +126,7 @@ export default function CafeDetail(){
     //댓글 더보기 버튼을 눌렀을때 호출되는 함수
     const handleMore = ()=>{
         //현재 댓글의 페이지가 마지막 페이지 인지 여부를 알아내서
-        const isLast = pageNum === totalPageCount
+        const isLast = pageNum >= totalPageCount
         //만일 마지막 페이지가 아니라면 바로 다음 댓글 페이지를 요청 
         if(!isLast){
             //로딩 상태로 바꿔준다
@@ -205,7 +208,10 @@ export default function CafeDetail(){
                 <input type="hidden" name="ref_group" defaultValue={state.num}/>
                 <input type="hidden" name="target_id" defaultValue={state.writer}/>
                 <textarea name="content"></textarea>
-                <button type="submit">등록</button>
+                <button type="submit" onClick={()=>{
+                    //원글의 댓글은 가장 위에 추가 해야 함으로 
+                    commentIndex=0
+                }}>등록</button>
             </form>
             {/* 댓글 목록 출력하기 */}
             <div className={cx("comments")}>
@@ -284,6 +290,17 @@ export default function CafeDetail(){
                                                     .style.display="none"
                                                 item.ref.current.querySelector(".answer-btn")
                                                     .innerText="답글"
+                                                //댓글이 들어가야 하는 인덱스값을 변수에 저장해 둔다 
+                                                commentIndex = commentList.reduce((acc, curr, index)=>{
+                                                    //현재의 댓글의 그룹번호가 버튼이 속한 댓글의 그룹번호와 같다면
+                                                    if(curr.comment_group === item.comment_group){
+                                                        //현재 댓글의 인덱스 값을 리턴한다.
+                                                        return index
+                                                    }else{
+                                                        //그 이외의 경우에는 누산된 값을 리턴한다.
+                                                        return acc
+                                                    }
+                                                }, 0) + 1    
                                             }}>등록</button>
                                         </form>
                                         { item.writer === userName ? 
